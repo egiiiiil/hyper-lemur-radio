@@ -1,0 +1,12 @@
+body {
+	font-family: "Nunito Sans", sans-serif;
+}
+main {
+	max-width: 30em;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+}
+main audio {
+	width: 100%;
+}
