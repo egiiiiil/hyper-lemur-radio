@@ -1,0 +1,8 @@
+**/.DS_Store
+.idea
+thumbs.db
+node_modules
+*.css.map
+.vscode/*
+.cache
+dist
