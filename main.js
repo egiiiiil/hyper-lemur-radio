@@ -10,6 +10,17 @@ let arrayOfChanels = [
 									220, //P4 Halland
 									200, //P4 Jämtland
 									]
+
+pageSetUp = () => {
+	console.log('Yes')
+	let main = document.createElement('main')
+	
+	main.setAttribute("id", "content-container");
+	document.body.append(main)
+}
+pageSetUp()
+
+
 randomNumber = () => {
 	let randomGenerator = arrayOfChanels[Math.floor(Math.random()*arrayOfChanels.length)];
 	return randomGenerator
@@ -19,37 +30,37 @@ randomizeChannel = () => {
 	let text;
 	switch(random) {
 		case 132:
-			text = "P1";
+			text = 'P1';
 			break;
 		case 163:
-			text = "P2";
+			text = 'P2';
 			break;
 		case 164:
-			text = "P3";
+			text = 'P3';
 			break;
 		case 213:
-			text = "P4 Blekinge";
+			text = 'P4 Blekinge';
 			break;
 		case 223:
-			text = "P4 Dalarna";
+			text = 'P4 Dalarna';
 			break;
 		case 205:
-			text = "P4 Gotland";
+			text = 'P4 Gotland';
 			break;
 		case 210:
-			text = "P4 Gävleborg";
+			text = 'P4 Gävleborg';
 			break;
 		case 212:
-			text = "P4 Göteborg";
+			text = 'P4 Göteborg';
 			break;
 		case 220:
-			text = "P4 Halland";
+			text = 'P4 Halland';
 			break;
 		case 200:
-			text = "P4 Jämtland";
+			text = 'P4 Jämtland';
 			break;
 		default:
-			text = "AAAAA";
+			text = 'AAAAA';
 	}
 	console.log('convert', random);
 	return text
@@ -62,7 +73,7 @@ fetchApi = () => {
 	fetch(`http://api.sr.se/api/v2/channels/${random}?format=json`) 
 		.then(response => response.json()) 
 		.then((data) => {
-			
+			console.log(data)
 			let formated = formatedResponse(data)
 
 			displayRadioInformation(formated)
@@ -81,25 +92,25 @@ formatedResponse = (data) => {
 	}
 	return formated
 }
-fetchButton = () => {
-	const button = document.createElement('button')
-	const main = document.getElementsByTagName('main')
-
-	button.innerText = "Shuffle"
+shufflebutton = () => {
+	const main = document.getElementById('content-container')
+	let button = document.createElement('button')
+	let a = "aaaaaa"
+	
+	button.innerText = 'Shuffle'
 	button.addEventListener('click', () => {
 		console.log('aaaaa')
+		fetchApi()
 	})
-	document.body.appendChild(button)
+	return button
 }
-
 displayRadioInformation = (content) => {
 	const contentContainer = document.querySelector('#content-container')
+	const shuffleButton = shufflebutton()
 /* 	console.log('display', content.id)
 	console.log('display', content.name)
 	console.log('display', content.image)
 	console.log('display', content.audio) */
-	//fetchButton();
-	
 	// CONTENT
 	contentContainer.innerHTML = `
 																<h1>${content.name}</h1>
@@ -108,17 +119,13 @@ displayRadioInformation = (content) => {
   																<source src="${content.audio}" type="audio/mpeg">
   																Your browser does not support the audio tag.
 																</audio>
-																<button>aaaaa</button>
 																`
+	contentContainer.appendChild(shuffleButton)
+																
 }
+
 styleRadio = (content) => {
 	const bodyTag = document.getElementsByTagName('body')
-/* 	console.log('style', content.color)
-	console.log('style', bodyTag) */
-	//fetchButton();
-	
-	// STYLE
-	//document.body.style.backgroundColor = "#2e2e2e";
 	document.body.style.backgroundColor = `#${content.color}`;
 
 
