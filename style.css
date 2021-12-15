@@ -10,3 +10,14 @@ main {
 main audio {
 	width: 100%;
 }
+button {
+	width: auto;
+	margin-top: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+main #shuffle-button__icon {
+	width: 2.5em;
+	height: 2.5em;
+}
