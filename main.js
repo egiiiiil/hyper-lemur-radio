@@ -12,11 +12,17 @@ let arrayOfChanels = [
 									]
 
 pageSetUp = () => {
-	console.log('<main> created')
+	let left = document.createElement('div')
 	let main = document.createElement('main')
+	let right = document.createElement('div')
 	
+	left.setAttribute("id", "left-container");
 	main.setAttribute("id", "content-container");
+	right.setAttribute("id", "right-container");
+
+	document.body.appendChild(left)
 	document.body.append(main)
+	document.body.appendChild(right)
 }
 pageSetUp()
 
@@ -25,46 +31,7 @@ randomNumber = () => {
 	let randomGenerator = arrayOfChanels[Math.floor(Math.random()*arrayOfChanels.length)];
 	return randomGenerator
 }
-randomizeChannel = () => {
-	let random = randomNumber()
-	let text;
-	switch(random) {
-		case 132:
-			text = 'P1';
-			break;
-		case 163:
-			text = 'P2';
-			break;
-		case 164:
-			text = 'P3';
-			break;
-		case 213:
-			text = 'P4 Blekinge';
-			break;
-		case 223:
-			text = 'P4 Dalarna';
-			break;
-		case 205:
-			text = 'P4 Gotland';
-			break;
-		case 210:
-			text = 'P4 Gävleborg';
-			break;
-		case 212:
-			text = 'P4 Göteborg';
-			break;
-		case 220:
-			text = 'P4 Halland';
-			break;
-		case 200:
-			text = 'P4 Jämtland';
-			break;
-		default:
-			text = 'AAAAA';
-	}
-	console.log('convert', random);
-	return text
-}
+
 
 
 
@@ -73,14 +40,79 @@ fetchApi = () => {
 	fetch(`http://api.sr.se/api/v2/channels/${random}?format=json`) 
 		.then(response => response.json()) 
 		.then((data) => {
-			console.log(data)
 			let formated = formatedResponse(data)
-
 			displayRadioInformation(formated)
 			styleRadio(formated)
 	});
+	fetch(`https://api.sr.se/api/v2/scheduledepisodes?channelid=${random}&format=json&pagination=false`) 
+		.then(response => response.json()) 
+		.then((show) => {
+			showLastAndNext(show)
+	});
 }
 fetchApi()
+
+timeNow = () => {
+	let now = new Date();
+	now = now.getTime()
+	return now
+} 
+
+
+showLastAndNext = (show) => {
+	checkForTime = timeNow()
+	let leftDiv = document.querySelector('#left-container')
+	let rightDiv = document.querySelector('#right-container')
+
+	
+
+	lastShowArray = []
+	nextShowArray = []
+	for(i = 0; i < show.schedule.length; i++) {
+
+		
+		let endtimeutc = show.schedule[i].endtimeutc
+		let starttimeutc = show.schedule[i].starttimeutc
+
+
+		let endShowDate = endtimeutc.replace(/[^0-9]/g, "")
+		let endShowDateAsNum = parseInt(endShowDate)
+		let endShowDateAsDate = new Date(endShowDateAsNum);
+
+		let startShowDate = starttimeutc.replace(/[^0-9]/g, "")
+		let startShowDateAsNum = parseInt(startShowDate)
+		let startShowDateAsDate = new Date(startShowDateAsNum);
+		
+		let endShowDateAsShort = endShowDateAsDate.toLocaleTimeString([], {timeStyle: 'short'});
+		let startShowDateAsShort = startShowDateAsDate.toLocaleTimeString([], {timeStyle: 'short'});
+
+		
+		if (checkForTime > endShowDateAsNum) {
+			lastShowArray.push([endShowDateAsShort, show.schedule[i].program.name])
+			lastShowArray.sort()
+		}
+		if (checkForTime < endShowDateAsNum) {
+			nextShowArray.push([startShowDateAsShort, show.schedule[i].program.name])
+			nextShowArray.sort()
+		}
+	}
+	
+	let nextShow = nextShowArray.at(-1)
+	let lastShow = lastShowArray.at(-1)
+
+
+	leftDiv.innerHTML  = `
+												<p>${lastShow[0]}<br>${lastShow[1]}</p>
+											  `
+	rightDiv.innerHTML = `
+												<p>${nextShow[0]}<br>${nextShow[1]}</p>
+											  `
+
+
+	
+
+}
+
 formatedResponse = (data) => {
 	let formated = {
 		id: 	 data.channel.id,
@@ -88,16 +120,21 @@ formatedResponse = (data) => {
 		image: data.channel.image,
 		audio: data.channel.liveaudio.url,
 		color: data.channel.color
-
 	}
 	return formated
 }
+
+
+
+
+
+
 shufflebutton = () => {
 	const main = document.getElementById('content-container')
 	let button = document.createElement('button')
 	
 	button.innerHTML = `
-											<svg id="shuffle-button__icon" width="550" height="550" viewBox="0 0 550 550" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<svg id="shuffle-button__icon" width="5.50" height="550" viewBox="0 0 550 550" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<rect width="550" height="550"/>
 												<path d="M220.008 289.46C209.827 304.948 199.046 319.994 186.183 333.527C155.878 365.406 116.33 373.871 73.6613 371.703C35.3523 369.753 35.5403 429.176 73.6613 431.115C153.827 435.187 210.492 400.551 255.605 341.586C248.176 331.902 241.311 322.148 235.029 312.748C229.859 305.024 224.857 297.128 220.008 289.46Z" fill="black"/>
 												<path d="M297.401 242.181C301.519 248.656 305.587 255.023 309.69 261.264C317.211 250.88 325.234 240.856 334.262 231.535C357.052 208.011 383.016 198.345 411.524 195.61C409.715 197.789 407.959 200.008 406.136 202.176C395.721 214.553 393.964 232.009 406.136 244.186C416.845 254.898 437.71 256.589 448.146 244.186C464.217 225.093 479.569 205.395 495.64 186.302C506.106 175.783 510.113 158.289 497.159 144.256L443.693 86.3286C417.658 58.1256 375.75 100.238 401.682 128.339L408.623 135.858C379.461 137.945 351.38 145.364 325.451 162.217C306.079 174.811 289.789 190.996 275.256 208.729C278.175 212.822 281.09 216.981 283.959 221.323C288.546 228.265 293.045 235.342 297.401 242.181Z" fill="black"/>
@@ -112,10 +149,6 @@ shufflebutton = () => {
 displayRadioInformation = (content) => {
 	const contentContainer = document.querySelector('#content-container')
 	const shuffleButton = shufflebutton()
-/* 	console.log('display', content.id)
-	console.log('display', content.name)
-	console.log('display', content.image)
-	console.log('display', content.audio) */
 	// CONTENT
 	contentContainer.innerHTML = `
 																<h1>${content.name}</h1>
@@ -132,6 +165,4 @@ displayRadioInformation = (content) => {
 styleRadio = (content) => {
 	const bodyTag = document.getElementsByTagName('body')
 	document.body.style.backgroundColor = `#${content.color}`;
-
-
 }
