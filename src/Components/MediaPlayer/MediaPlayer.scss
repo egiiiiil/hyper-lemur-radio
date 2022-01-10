@@ -1,0 +1,12 @@
+#media-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 11em;
+  #media-player-image {
+    width: 5em;
+  }
+  #media-player-controls {
+    width: 100%;
+  }
+}
