@@ -1,0 +1,17 @@
+#home-page {
+  display: grid;
+  width: 100vw;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "title title media-player"
+    "channels channels media-player";
+}
+#title {
+  grid-area: title;
+}
+#media-player {
+  grid-area: media-player;
+}
+#channel-list {
+  grid-area: channels;
+}

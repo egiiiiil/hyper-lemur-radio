@@ -1,0 +1,21 @@
+#channel-list {
+	ul {
+		overflow: scroll;
+		padding: 0;
+		list-style-type: none;
+		display: flex;
+		align-items: flex-end;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		width: 100%;
+		gap: 12px;
+		li {
+			min-width: 8em;
+			max-width: 8em;
+			align-items: flex-start;
+			img {
+				max-width: 8em;
+			}
+		}
+	}
+}
