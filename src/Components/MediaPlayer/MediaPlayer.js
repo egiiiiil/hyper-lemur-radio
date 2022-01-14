@@ -10,7 +10,7 @@ const MediaPlayer = () => {
 		return <div id='media-player'>...</div>;
 	} else {
 		console.log(player.pickedchannel[1])
-		return <div id='media-player'>
+		return <div id='media-player'  className="active">
 			<h2>{player.pickedchannel[0]}</h2>
 			<img src={player.pickedchannel[1]} alt="" id="media-player-image"/>
 			<audio controls id="media-player-controls">
@@ -22,4 +22,3 @@ const MediaPlayer = () => {
 };
 
 export default MediaPlayer;
-{}

@@ -15,7 +15,7 @@ const ChannelSelect = () => {
 			.catch((err) => console.error(err));
 	}
 	
-
+	
 	useEffect(() => {
 		async function init() {
 			const channels = await fetchChannelList()
@@ -32,7 +32,7 @@ const ChannelSelect = () => {
 			<div id="channel-list">
 				<ul>
 					{listItems && listItems.map((listItems, i) => (
-						<li key={i}>
+						<li key={listItems.id}>
 							<div>
 								<p>{listItems.name}</p>
 								<img src={listItems.image} alt={`Image for ${listItems.name}`}/>

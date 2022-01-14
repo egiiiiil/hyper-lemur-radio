@@ -5,9 +5,9 @@ import MediaPlayer from "../Components/MediaPlayer/MediaPlayer";
 
 import './Homepage.scss';
 
-export default function App() {
+export default function HomePage() {
   return (
-    <div>
+    <>
       <div id='home-page'>
 				<div id='title'>
 					<h1>SR PLAYER</h1>
@@ -15,6 +15,6 @@ export default function App() {
         <ChannelSelect />
         <MediaPlayer />
       </div>
-    </div>
+    </>
   );
 }
