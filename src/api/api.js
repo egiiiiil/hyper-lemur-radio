@@ -1,4 +1,4 @@
-const srUrl = 'http://api.sr.se/api/v2'
+const srUrl = 'https://api.sr.se/api/v2'
 
 async function fetchChannelList() {
 	return fetch(`${srUrl}/channels/?pagination=false&format=json`)
