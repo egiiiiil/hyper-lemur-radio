@@ -1,17 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap");
+* {
+	font-family: "Nunito Sans", sans-serif;
+}
+body {
+	background: rgb(245, 245, 245);
+}
 #home-page {
-  display: grid;
-  width: 100vw;
-  grid-template-columns: auto 1fr;
-  grid-template-areas:
-    "title title media-player"
-    "channels channels media-player";
+	display: grid;
+	width: 100%;
+	grid-template-columns: 2.5fr auto;
 }
 #title {
-  grid-area: title;
+	grid-column: 1;
 }
 #media-player {
-  grid-area: media-player;
+	grid-column: 2;
+	grid-row: 1 / 3;
+	z-index: 2;
+	position: -webkit-sticky;
+	position: sticky;
 }
 #channel-list {
-  grid-area: channels;
+	grid-column: 1 / 3;
+	grid-row: 2;
+	z-index: 1;
 }
