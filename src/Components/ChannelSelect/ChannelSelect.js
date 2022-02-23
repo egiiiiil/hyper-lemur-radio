@@ -25,6 +25,7 @@ const ChannelSelect = () => {
 	return (
 		<>
 			<div id='channel-list'>
+				<h2>Live Stations</h2>
 				<ul>
 					{listItems && listItems.map((listItems, i) => (
 						<li key={listItems.id}>
