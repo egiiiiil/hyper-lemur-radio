@@ -10,7 +10,7 @@ export default function HomePage() {
     <>
       <div id='home-page'>
 				<div id='title'>
-					<h1>SR PLAYER</h1>
+					<h1>&#60;Hyper Lemur Radio /&#62;</h1>
 				</div>
         <ChannelSelect />
         <MediaPlayer />
