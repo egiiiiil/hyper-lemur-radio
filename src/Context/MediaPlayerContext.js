@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 
 export const MediaPlayerContext = createContext();
 
-export const UserProvider = ({ children }) => {
+export const ChannelProvider = ({ children }) => {
 	const [channelList, setChannelList] = useState("");
 	const [pickedchannel, setPickedchannel] = useState("");
 
@@ -12,7 +12,7 @@ export const UserProvider = ({ children }) => {
 				channelList,
 				setChannelList,
 				pickedchannel,
-				setPickedchannel
+				setPickedchannel,
 			}}
 		>
 			{children}
